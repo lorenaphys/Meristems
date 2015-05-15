@@ -1,0 +1,138 @@
+// Pesudo código para la rutina isoformasifiu.m
+int NF = 5000;
+double ep1 = 0.1;
+double ep = ep1^2;
+double sigma = -5.5;
+double beta = 0.5;
+double gamma = 0.0;
+int Nx = 60;
+int Ny = 40;
+int Nz = 40;
+int R = 11;
+double Afi = 1.0;
+int N = 5;   
+int step=200;
+int iter, iiter, i, j, k;
+double dt=0.0001;
+
+//Definicion de la funcion lap3D, que es el laplaciano tridimensional.
+int n,m,mm;
+input aux;
+
+lap = arreglo de ceros de la misma dimension que aux;
+LapUx = lap;
+LapUy = lap;
+LapUz = lap;
+
+
+for n=2:Ny-1
+      LapUy(x,n,z)=aux(x,n-1,z)-2*aux(x,n,z)+aux(x,n+1,z); 
+      //Para todo x en [1,Nx] y para todo z en [1,Nz].
+end
+
+for m=2:Nx-1;
+      LapUx(m,y,z)=aux(m-1,y,z)-2*aux(m,y,z)+aux(m+1,y,z);
+      //Para todo y en [1,Ny].
+end
+
+for mm=2:Nz-1;
+      LapUz(x,y,mm)=aux(x,y,mm-1)-2*aux(x,y,mm)+aux(x,y,mm+1);
+end
+
+     LapUy(x,1,z) = 0;
+     LapUy(x,Ny,z)=0;
+     LapUx(1,y,z)=0;
+     LapUx(Nx,y,z)=0;
+     LapUz(x,y,1)=0;
+     LapUz(x,y,Nz)=0;
+     lap=LapUx+LapUy+LapUz;
+end
+//fin de la funcion
+
+
+fi = ones(Nx,Ny,Nz); //Aun no se como definir fi.
+
+for i=1:Nx
+    for j=1:Ny
+        for k=1:Nz
+      r(i,j,k)=sqrt((i-Nx/2)^2+(j-Ny/2)^2+(k)^2);
+      if r(i,j,k)>=R
+      fi(i,j,k)=-1;
+      end
+        end
+   
+   end
+end
+
+u = zeros(Nx,Ny,Nz);
+I = u;
+
+R1 = valor de z entero donde se encuentra el min(abs(fi(Nx/2,Ny/2,z))); //Para todo z en [1,Nz].
+
+for i=1:Nx
+    for j=1:Ny
+        for k=1:Nz
+            u(i,j,k)=1+3.5*exp(-((i-Nx/2)^2+(j-Ny/2)^2+(k-R1+8)^2)/100);
+        end
+    end
+end
+
+Indicar que en las mismas posiciones en que fi <= -0.99, u = 0. En matlab esto se hace con u(fi <= -0.99) = 0.
+
+for iter=1:NF
+    for iiter=1:step
+		R1 = como anteriormente, es la posicion de z donde esta el min(abs(fi(Nx/2,Ny/2,z));
+		lapfi=lap3D(fi);
+       
+        mu=((fi + ep1*beta.*u).*((fi).^2 - 1) - ep*lapfi); //donde el punto antes del operador implica que se realiza elemento a elemento.
+      
+        lapmu=lap3D(mu);
+
+        potffi=2*fi.*(((fi).^2-1)).*((beta*u-R1).^2)+2*fi.*((beta.*u).^2);
+        potfu=2*(((fi).^2-1).^2).*(((beta*u-R1)))+2*(fi.^2).*(beta*u);
+        
+        lapu=lap3D(u);
+        
+        F=2*(3*fi.^2-1-2*ep1*beta*fi.*u).*mu-2*ep*lapmu+potffi-gamma*beta*lapu;
+          
+        G=2*mu*ep1.*(((fi).^2-1))+potfu-gamma*lapfi;
+         
+        Fs=1*((sigma.*lapfi));
+
+        lapF=lap3D(F);
+        
+        lapFs=lap3D(Fs);
+
+        lapG=lap3D(G);
+        
+        I=sum(sum(sum(gradient(fi).*gradient(lapF))));
+        Is=sum(sum(sum(gradient(fi).*gradient(lapfi))));
+        
+        sigma=I/Is;
+        
+        I=120*(F)*sum(sum(sum((fi>=-.99))))/Nx/Ny/Nz; //Es decir, la suma se hace sólo donde fi >= 0.99;
+        
+        I(fi<=0)=0; //En las mismas posiciones en que fi <= 0, I = 0;       
+        
+        fi = fi + dt*(lapF-lapFs-I);
+        
+        u=u + dt*(lapG);
+        
+        fi(1,y,z)=fi(2,y,z);
+        fi(Nx,y,z)=fi(Nx-1,y,z);
+        fi(x,1,z)=fi(x,2,z);
+        fi(x,Ny,z)=fi(x,Ny-1,z);
+        fi(x,y,1)=fi(x,y,2);
+        fi(x,y,Nz)=fi(x,y,Nz-1);
+        u(1,y,z)=u(2,y,z);
+        u(Nx,y,z)=u(Nx-1,y,z);
+        u(x,1,z)=u(x,2,z);
+        u(x,Ny,z)=u(x,Ny-1,z);
+        u(x,y,1)=u(x,y,2);
+        u(x,y,Nz)=u(x,y,Nz-1);
+        
+        
+        fi(x,y,1)=fiini(x,y,1);
+		
+    end
+end
