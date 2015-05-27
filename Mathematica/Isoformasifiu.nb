@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[   3580229,      59577]
-NotebookOptionsPosition[   3577387,      59484]
-NotebookOutlinePosition[   3577722,      59499]
-CellTagsIndexPosition[   3577679,      59496]
+NotebookDataLength[   3577386,      59492]
+NotebookOptionsPosition[   3574545,      59399]
+NotebookOutlinePosition[   3574880,      59414]
+CellTagsIndexPosition[   3574837,      59411]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -58993,56 +58993,13 @@ Cell[BoxData[
         RowBox[{"\[Phi]", "[", 
          RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], ",", "t"}], 
        "]"}], "\[Equal]", 
-      RowBox[{"Laplacian", "[", 
-       RowBox[{"F1", ",", 
-        RowBox[{"{", 
-         RowBox[{"x", ",", "y", ",", "z"}], "}"}]}], "]"}]}], ",", 
-     RowBox[{
-      RowBox[{"(", 
-       RowBox[{
-        RowBox[{"D", "[", 
-         RowBox[{
-          RowBox[{"\[Phi]", "[", 
-           RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], ",", "x"}], 
-         "]"}], "/.", 
-        RowBox[{"x", "\[Rule]", "0"}]}], ")"}], "\[Equal]", 
-      RowBox[{"-", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"D", "[", 
-          RowBox[{
-           RowBox[{"\[Phi]", "[", 
-            RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], ",", "x"}], 
-          "]"}], "/.", 
-         RowBox[{"x", "\[Rule]", "Nx"}]}], ")"}]}]}], ",", 
-     RowBox[{
-      RowBox[{"(", 
-       RowBox[{
-        RowBox[{"D", "[", 
-         RowBox[{
-          RowBox[{"\[Phi]", "[", 
-           RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], ",", "y"}], 
-         "]"}], "/.", 
-        RowBox[{"y", "\[Rule]", "0"}]}], ")"}], "\[Equal]", 
-      RowBox[{"-", 
-       RowBox[{"(", 
-        RowBox[{
-         RowBox[{"D", "[", 
-          RowBox[{
-           RowBox[{"\[Phi]", "[", 
-            RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], ",", "y"}], 
-          "]"}], "/.", 
-         RowBox[{"y", "\[Rule]", "Ny"}]}], ")"}]}]}], ",", 
-     RowBox[{
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"0", ",", "y", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"Nx", ",", "y", ",", "z", ",", "t"}], "]"}]}], ",", 
-     RowBox[{
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"x", ",", "0", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"x", ",", "Ny", ",", "z", ",", "t"}], "]"}]}], ",", 
+      RowBox[{
+       RowBox[{"Laplacian", "[", 
+        RowBox[{"F1", ",", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "y", ",", "z"}], "}"}]}], "]"}], "+", 
+       RowBox[{"NeumannValue", "[", 
+        RowBox[{"0.", ",", "True"}], "]"}]}]}], ",", 
      RowBox[{
       RowBox[{"\[Phi]", "[", 
        RowBox[{"x", ",", "y", ",", "z", ",", "0"}], "]"}], "\[Equal]", 
@@ -59106,23 +59063,21 @@ Cell[BoxData[
    3.6416799474607773`*^9, 3.641679959635915*^9}, {3.6416800036945353`*^9, 
    3.64168002920576*^9}, {3.641680094705909*^9, 3.641680225697974*^9}, {
    3.641680620975596*^9, 3.641680672949627*^9}, {3.641680718884428*^9, 
-   3.641680808531981*^9}}],
+   3.641680808531981*^9}, {3.641682299959956*^9, 3.6416823072785254`*^9}, {
+   3.6416823809464903`*^9, 3.6416823953508663`*^9}, {3.641682473773334*^9, 
+   3.641682505457374*^9}, {3.641682543424741*^9, 3.641682591634675*^9}, 
+   3.641682752540011*^9, {3.641682790515202*^9, 3.641682804073209*^9}}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"NDSolve", "::", "bcedge"}], "MessageName"], 
+   RowBox[{"NDSolve", "::", "ndnum"}], "MessageName"], 
   RowBox[{
-  ":", " "}], "\<\"Boundary condition \
-\[NoBreak]\\!\\(\\(\\(\\(\\(\\*SuperscriptBox[\\\"\[Phi]\\\", TagBox[\\((1, \
-0, 0, 0)\\), Derivative], Rule[MultilineFunction, None]]\\)\\)[\\(\\(0, y, z, \
-t\\)\\)]\\)\\) \[Equal] \\(\\(-\\(\\(\\(\\(\\*SuperscriptBox[\\\"\[Phi]\\\", \
-TagBox[\\((1, 0, 0, 0)\\), Derivative], Rule[MultilineFunction, None]]\\)\\)[\
-\\(\\(60, y, z, t\\)\\)]\\)\\)\\)\\)\\)\[NoBreak] is not specified on a \
-single edge of the boundary of the computational domain. \
+  ":", " "}], "\<\"Encountered non-numerical value for a derivative at \
+\[NoBreak]\\!\\(t\\)\[NoBreak] == \[NoBreak]\\!\\(0.`\\)\[NoBreak]. \
 \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/NDSolve/bcedge\\\", \
-ButtonNote -> \\\"NDSolve::bcedge\\\"]\\)\"\>"}]], "Message", "MSG",
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/NDSolve/ndnum\\\", \
+ButtonNote -> \\\"NDSolve::ndnum\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{
   3.641566365168583*^9, 3.641566826951982*^9, 3.6415669625659246`*^9, 
    3.641567177291562*^9, 3.641567348139076*^9, {3.641568973010672*^9, 
@@ -59158,7 +59113,9 @@ ButtonNote -> \\\"NDSolve::bcedge\\\"]\\)\"\>"}]], "Message", "MSG",
    3.6416788114359426`*^9}, 3.641679513088793*^9, 3.641679899125889*^9, 
    3.641679962365872*^9, {3.641680013327064*^9, 3.641680030196877*^9}, 
    3.641680111681591*^9, 3.641680227898773*^9, 3.641680675757769*^9, 
-   3.6416808110293493`*^9}],
+   3.6416808110293493`*^9, {3.641682284175144*^9, 3.641682310059128*^9}, 
+   3.641682398019998*^9, 3.6416825948978148`*^9, 3.641682755671977*^9, 
+   3.641682806355876*^9}],
 
 Cell[BoxData[
  RowBox[{"NDSolve", "[", 
@@ -59175,6 +59132,8 @@ Cell[BoxData[
         MultilineFunction->None], "[", 
        RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
       RowBox[{
+       RowBox[{"NeumannValue", "[", 
+        RowBox[{"0.`", ",", "True"}], "]"}], "+", 
        RowBox[{"15.360000000000003`", " ", 
         RowBox[{"\[Phi]", "[", 
          RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}], " ", 
@@ -59293,52 +59252,6 @@ Cell[BoxData[
           MultilineFunction->None], "[", 
          RowBox[{"x", ",", "y", ",", "z", ",", "t"}], "]"}]}]}]}], ",", 
      RowBox[{
-      RowBox[{
-       SuperscriptBox["\[Phi]", 
-        TagBox[
-         RowBox[{"(", 
-          RowBox[{"1", ",", "0", ",", "0", ",", "0"}], ")"}],
-         Derivative],
-        MultilineFunction->None], "[", 
-       RowBox[{"0", ",", "y", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"-", 
-       RowBox[{
-        SuperscriptBox["\[Phi]", 
-         TagBox[
-          RowBox[{"(", 
-           RowBox[{"1", ",", "0", ",", "0", ",", "0"}], ")"}],
-          Derivative],
-         MultilineFunction->None], "[", 
-        RowBox[{"60", ",", "y", ",", "z", ",", "t"}], "]"}]}]}], ",", 
-     RowBox[{
-      RowBox[{
-       SuperscriptBox["\[Phi]", 
-        TagBox[
-         RowBox[{"(", 
-          RowBox[{"0", ",", "1", ",", "0", ",", "0"}], ")"}],
-         Derivative],
-        MultilineFunction->None], "[", 
-       RowBox[{"x", ",", "0", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"-", 
-       RowBox[{
-        SuperscriptBox["\[Phi]", 
-         TagBox[
-          RowBox[{"(", 
-           RowBox[{"0", ",", "1", ",", "0", ",", "0"}], ")"}],
-          Derivative],
-         MultilineFunction->None], "[", 
-        RowBox[{"x", ",", "40", ",", "z", ",", "t"}], "]"}]}]}], ",", 
-     RowBox[{
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"0", ",", "y", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"60", ",", "y", ",", "z", ",", "t"}], "]"}]}], ",", 
-     RowBox[{
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"x", ",", "0", ",", "z", ",", "t"}], "]"}], "\[Equal]", 
-      RowBox[{"\[Phi]", "[", 
-       RowBox[{"x", ",", "40", ",", "z", ",", "t"}], "]"}]}], ",", 
-     RowBox[{
       RowBox[{"\[Phi]", "[", 
        RowBox[{"x", ",", "y", ",", "z", ",", "0"}], "]"}], "\[Equal]", 
       RowBox[{"Tanh", "[", 
@@ -59397,7 +59310,9 @@ Cell[BoxData[
    3.641678742426323*^9, 3.641678811441464*^9}, 3.641679513095489*^9, 
    3.64167989913104*^9, 3.641679962370962*^9, {3.641680013331345*^9, 
    3.641680032468985*^9}, 3.641680111686364*^9, 3.641680227903224*^9, 
-   3.641680678918809*^9, 3.641680811038287*^9}]
+   3.641680678918809*^9, 3.641680811038287*^9, {3.641682284186895*^9, 
+   3.641682313110971*^9}, 3.6416823980256367`*^9, 3.64168259490377*^9, 
+   3.641682755677408*^9, 3.6416828063612556`*^9}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -59566,17 +59481,17 @@ Cell[3553163, 58942, 731, 13, 39, "Output"]
 Cell[3553909, 58958, 494, 13, 32, "Input"],
 Cell[3554406, 58973, 318, 7, 32, "Input"],
 Cell[CellGroupData[{
-Cell[3554749, 58984, 6170, 124, 55, "Input"],
-Cell[3560922, 59110, 3315, 50, 28, "Message"],
-Cell[3564240, 59162, 9881, 237, 128, "Output"]
+Cell[3554749, 58984, 4940, 84, 32, "Input"],
+Cell[3559692, 59070, 3110, 47, 23, "Message"],
+Cell[3562805, 59119, 8474, 195, 103, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[3574158, 59404, 607, 14, 32, "Input"],
-Cell[3574768, 59420, 637, 13, 33, "Message"],
-Cell[3575408, 59435, 637, 13, 33, "Message"],
-Cell[3576048, 59450, 636, 13, 33, "Message"],
-Cell[3576687, 59465, 545, 11, 23, "Message"],
-Cell[3577235, 59478, 124, 2, 32, "Output"]
+Cell[3571316, 59319, 607, 14, 32, "Input"],
+Cell[3571926, 59335, 637, 13, 33, "Message"],
+Cell[3572566, 59350, 637, 13, 33, "Message"],
+Cell[3573206, 59365, 636, 13, 33, "Message"],
+Cell[3573845, 59380, 545, 11, 23, "Message"],
+Cell[3574393, 59393, 124, 2, 32, "Output"]
 }, Open  ]]
 }, Open  ]]
 }
