@@ -48,7 +48,7 @@ bet=.1;
 % for i=1:length(uf)
 %  uinit(uf(i),vf(i))=u0+.1*(rand-.5);%+u(uf(i),vf(i));
 % end
-%[X,Y,Z]=meshgrid(1:Nx,1:Ny,1:Nz);
+[X,Y,Z]=meshgrid(1:Nx,1:Ny,1:Nz);
         %teta=atan2((Y-Ny/2),(X-Nx/2));
         %rad=sqrt((X-Nx/2+.5).^2+(Y-Ny/2+.5).^2);
         u=1.5*exp(-((X-Nx/2-.5).^2+(Y-Ny/2-.5).^2+(Z-R+2).^2)/20);
