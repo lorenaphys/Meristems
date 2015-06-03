@@ -22,4 +22,4 @@ for i=1:Nx
 end
 
 
-isosurface(fi,0)
+%isosurface(fi,0)
