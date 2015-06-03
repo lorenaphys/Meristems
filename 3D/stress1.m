@@ -33,9 +33,7 @@ semiesf3D
 fiini=fi;
 %%%%%%%%%%% parameters for iteraion loop %%%%%%%%%%%%%%%%%%%%%%%%
 step=200;
-iter=1;
 dt=1e-5;
-cont=iter;
 %% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% initial conditions for u and beta %%%%%
 
 % u1=1; 
@@ -50,9 +48,9 @@ bet=.1;
 % for i=1:length(uf)
 %  uinit(uf(i),vf(i))=u0+.1*(rand-.5);%+u(uf(i),vf(i));
 % end
-[X,Y,Z]=meshgrid(1:Nx,1:Ny,1:Nz);
-        teta=atan2((Y-Ny/2),(X-Nx/2));
-        rad=sqrt((X-Nx/2+.5).^2+(Y-Ny/2+.5).^2);
+%[X,Y,Z]=meshgrid(1:Nx,1:Ny,1:Nz);
+        %teta=atan2((Y-Ny/2),(X-Nx/2));
+        %rad=sqrt((X-Nx/2+.5).^2+(Y-Ny/2+.5).^2);
         u=1.5*exp(-((X-Nx/2-.5).^2+(Y-Ny/2-.5).^2+(Z-R+2).^2)/20);
         %u=2.5*rad.*(cos(teta*N)+sin(teta*N)).*(Z/Nz)/max(max(max(rad)))+(exp(-((-X+Nx/2).^2+(-Y+Ny/2).^2+(-Z+(R+14)).^2)/80));
         %u=2.5*rad.*(cos(teta*N)+sin(teta*N)).*(Z/Nz)/max(max(max(rad)))+(exp(-((X-Nx/3).^2+(Y-Ny/3).^2+(Z-(R+2)).^2)/50));
@@ -96,7 +94,7 @@ fix0(:,:)=fi(Nx/2,:,:);
 % load isoformas-may27-1
 % NF=800;
 % cont=iter;
-for iter=cont:NF              %time loop
+for iter=1:NF              %time loop
     for iiter=1:step
  
  %%   deficiones 
