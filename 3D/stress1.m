@@ -262,6 +262,8 @@ h=max(max(max(isnan(fi(:,:,:)))));
 %     axis equal
 %     %getframe(gcf);
 %     hold off
+   
+   save(['/iter' num2str(iter)]);
     
 end
 
