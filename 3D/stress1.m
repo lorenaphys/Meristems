@@ -248,9 +248,9 @@ h=max(max(max(isnan(fi(:,:,:)))));
 % 
 % %para hacer peliculas 3D usar cine3D y cine2D
 % %%
-%     Fm(:,:,:,iter)=fi(:,:,:);
-%     U(:,:,:,iter)=u(:,:,:);
-%     Sm(:,:,:,iter)=S(:,:,:);
+     Fm(:,:,:,iter)=fi(:,:,:);
+     Um(:,:,:,iter)=u(:,:,:);
+     Sm(:,:,:,iter)=S(:,:,:);
 %     %%
 %     figure(4)
 %     fix(:,:)=fi(:,Ny/2,:);
@@ -261,8 +261,10 @@ h=max(max(max(isnan(fi(:,:,:)))));
 %     %getframe(gcf);
 %     hold off
    
-   save(['/iter' num2str(iter)]);
+   
     
 end
+
+save Junio2;
 
 exit
