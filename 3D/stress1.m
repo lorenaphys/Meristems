@@ -150,12 +150,12 @@ str=zeros(Nx,Ny,Nz,3,3);
  str(:,:,:,2,2)=eta*(P(:,:,:)+sigma*gfi(:,:,:,2).*gfi(:,:,:,2)-sifiu*gu(:,:,:,2).*gfi(:,:,:,2)-2*Afi*ep*gmu(:,:,:,2).*gfi(:,:,:,2)+2*Afi*ep*mu.*ggfi2(:,:,:,2));
  str(:,:,:,3,3)=eta*(P(:,:,:)+sigma*gfi(:,:,:,3).*gfi(:,:,:,3)-sifiu*gu(:,:,:,3).*gfi(:,:,:,3)-2*Afi*ep*gmu(:,:,:,3).*gfi(:,:,:,3)+2*Afi*ep*mu.*ggfi3(:,:,:,3));
  
- str(:,:,:,1,2)=eta*(sigma*gfi(:,:,:,1).*gfi(:,:,:,2)-sifiu*gu(:,:,:,1).*gfi(:,:,:,2)-2*Afi*ep*gmu(:,:,:,1).*gfi(:,:,:,2)-2*Afi*ep*ggfi1(:,:,:,2));
- str(:,:,:,1,3)=eta*(sigma*gfi(:,:,:,1).*gfi(:,:,:,3)-sifiu*gu(:,:,:,1).*gfi(:,:,:,3)-2*Afi*ep*gmu(:,:,:,1).*gfi(:,:,:,3)-2*Afi*ep*ggfi1(:,:,:,3));
- str(:,:,:,2,1)=eta*(sigma*gfi(:,:,:,2).*gfi(:,:,:,1)-sifiu*gu(:,:,:,2).*gfi(:,:,:,1)-2*Afi*ep*gmu(:,:,:,2).*gfi(:,:,:,1)-2*Afi*ep*ggfi2(:,:,:,1));
- str(:,:,:,2,3)=eta*(sigma*gfi(:,:,:,2).*gfi(:,:,:,3)-sifiu*gu(:,:,:,2).*gfi(:,:,:,3)-2*Afi*ep*gmu(:,:,:,2).*gfi(:,:,:,3)-2*Afi*ep*ggfi2(:,:,:,3));
- str(:,:,:,3,1)=eta*(sigma*gfi(:,:,:,3).*gfi(:,:,:,1)-sifiu*gu(:,:,:,3).*gfi(:,:,:,1)-2*Afi*ep*gmu(:,:,:,3).*gfi(:,:,:,1)-2*Afi*ep*ggfi3(:,:,:,1));
- str(:,:,:,3,2)=eta*(sigma*gfi(:,:,:,3).*gfi(:,:,:,2)-sifiu*gu(:,:,:,3).*gfi(:,:,:,2)-2*Afi*ep*gmu(:,:,:,3).*gfi(:,:,:,2)-2*Afi*ep*ggfi3(:,:,:,2)); 
+ str(:,:,:,1,2)=eta*(sigma*gfi(:,:,:,1).*gfi(:,:,:,2)-sifiu*gu(:,:,:,1).*gfi(:,:,:,2)-2*Afi*ep*gmu(:,:,:,1).*gfi(:,:,:,2)-2*Afi*ep*mu.*ggfi1(:,:,:,2));
+ str(:,:,:,1,3)=eta*(sigma*gfi(:,:,:,1).*gfi(:,:,:,3)-sifiu*gu(:,:,:,1).*gfi(:,:,:,3)-2*Afi*ep*gmu(:,:,:,1).*gfi(:,:,:,3)-2*Afi*ep*mu.*ggfi1(:,:,:,3));
+ str(:,:,:,2,1)=eta*(sigma*gfi(:,:,:,2).*gfi(:,:,:,1)-sifiu*gu(:,:,:,2).*gfi(:,:,:,1)-2*Afi*ep*gmu(:,:,:,2).*gfi(:,:,:,1)-2*Afi*ep*mu.*ggfi2(:,:,:,1));
+ str(:,:,:,2,3)=eta*(sigma*gfi(:,:,:,2).*gfi(:,:,:,3)-sifiu*gu(:,:,:,2).*gfi(:,:,:,3)-2*Afi*ep*gmu(:,:,:,2).*gfi(:,:,:,3)-2*Afi*ep*mu.*ggfi2(:,:,:,3));
+ str(:,:,:,3,1)=eta*(sigma*gfi(:,:,:,3).*gfi(:,:,:,1)-sifiu*gu(:,:,:,3).*gfi(:,:,:,1)-2*Afi*ep*gmu(:,:,:,3).*gfi(:,:,:,1)-2*Afi*ep*mu.*ggfi3(:,:,:,1));
+ str(:,:,:,3,2)=eta*(sigma*gfi(:,:,:,3).*gfi(:,:,:,2)-sifiu*gu(:,:,:,3).*gfi(:,:,:,2)-2*Afi*ep*gmu(:,:,:,3).*gfi(:,:,:,2)-2*Afi*ep*mu.*ggfi3(:,:,:,2)); 
 
  
  
@@ -265,6 +265,6 @@ h=max(max(max(isnan(fi(:,:,:)))));
     
 end
 
-save Junio2;
+save Junio3;
 
 exit
