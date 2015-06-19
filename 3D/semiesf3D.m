@@ -1,6 +1,6 @@
 Nx=40;
 Ny=40;
-Nz=60;
+Nz=70;
 R=15;
 dd=ones(Nx,Ny);
 

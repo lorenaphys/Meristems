@@ -13,10 +13,10 @@ Nx=40;
 Ny=40;
 Nz=60;
 R=9;
-N=2;
+N=4;
 sifiu=0.;
 duu=.1; 
-Du=10;
+Du=50;
 Dfi=1;
 eta=5;
 
@@ -27,8 +27,8 @@ Av=2;
 Afi=.5;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% form of fi and initial values
-
 semiesf3D
+
 %prisma3D
 fiini=fi;
 %%%%%%%%%%% parameters for iteraion loop %%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,8 +51,8 @@ bet=.1;
 [X,Y,Z]=meshgrid(1:Nx,1:Ny,1:Nz);
         %teta=atan2((Y-Ny/2),(X-Nx/2));
         %rad=sqrt((X-Nx/2+.5).^2+(Y-Ny/2+.5).^2);
-        u=1.5*exp(-((X-Nx/2-.5).^2+(Y-Ny/2-.5).^2+(Z-R+2).^2)/20);
-        %u=2.5*rad.*(cos(teta*N)+sin(teta*N)).*(Z/Nz)/max(max(max(rad)))+(exp(-((-X+Nx/2).^2+(-Y+Ny/2).^2+(-Z+(R+14)).^2)/80));
+        u=1.5*exp(-((X-Nx/3-.5).^2+(Y-Ny/3-.5).^2+(Z-R+2).^2)/20);
+        %u=2.5*rad.*(cos(teta*N)+sin(teta*N)).*(Z/Nz)/max(max(max(rad)))+(exp(-((-X+Nx/2-.5).^2+(-Y+Ny/2-.5).^2+(-Z+(R+14)).^2)/80));
         %u=2.5*rad.*(cos(teta*N)+sin(teta*N)).*(Z/Nz)/max(max(max(rad)))+(exp(-((X-Nx/3).^2+(Y-Ny/3).^2+(Z-(R+2)).^2)/50));
         %u=2.5*rand(Nx,Ny,Nz);
 %u=1-u;
@@ -94,7 +94,8 @@ fix0(:,:)=fi(Nx/2,:,:);
 % load isoformas-may27-1
 % NF=800;
 % cont=iter;
-for iter=1:NF              %time loop
+
+for iter=401:NF              %time loop
     for iiter=1:step
  
  %%   deficiones 
@@ -261,10 +262,10 @@ h=max(max(max(isnan(fi(:,:,:)))));
 %     %getframe(gcf);
 %     hold off
    
-   
+  save('iter.mat','iter') 
     
 end
 
-save Junio3;
+save Junio10b;
 
 exit
