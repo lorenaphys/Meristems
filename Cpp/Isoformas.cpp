@@ -4,22 +4,23 @@
 #include <stdlib.h> // libreria para el uso de rand()  
 #include <time.h>   // libreria para el uso de time() 
 #include <math.h>
+#include <algorithm> // std::min_element, std::max_element
 
 
 using namespace std;
 
 
-TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
-TCLAP::ValueArg<double> eps("eps","Parametro_eps", "Parametro de orden",false,0.1,"double",cmd);
-TCLAP::ValueArg<double> N("N","Contador_N", "Rompimiento de simetria",false,2,"int",cmd);
-TCLAP::ValueArg<double> A("Afi","Coeficiente_A", "Coeficiente Afi",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> Av("Av","Coeficiente_Av", "Coeficiente Av",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> Duu("Duu","Coeficiente_Duu", "Coeficiente Duu",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> As("As","Coeficiente_As", "Coeficiente As",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> Ab("Ab","Coeficiente_Ab", "Coeficiente Ab",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> Af("Af","Coeficiente_Af", "Coeficiente Af",false,1.0,"double",cmd);
-TCLAP::ValueArg<double> NF("NF","Contador_NF", "Numero de iteraciones",false,200,"int",cmd);
-TCLAP::ValueArg<double> st("st","Contador_st", "Numero de iteraciones internas",false,200,"int",cmd);
+//TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
+//TCLAP::ValueArg<double> eps("eps","Parametro_eps", "Parametro de orden",false,0.1,"double",cmd);
+//TCLAP::ValueArg<int> n("n","Contador_n", "Rompimiento de simetria",false,2,"int",cmd);
+//TCLAP::ValueArg<double> afi("afi","Coeficiente_afi", "Coeficiente Afi",false,1.0,"double",cmd);
+//TCLAP::ValueArg<double> av("av","Coeficiente_av", "Coeficiente Av",false,1.0,"double",cmd);
+//TCLAP::ValueArg<double> duu("duu","Coeficiente_duu", "Coeficiente Duu",false,1.0,"double",cmd);
+//TCLAP::ValueArg<double> as("as","Coeficiente_as", "Coeficiente As",false,1.0,"double",cmd);
+//TCLAP::ValueArg<double> ab("ab","Coeficiente_ab", "Coeficiente Ab",false,1.0,"double",cmd);
+//TCLAP::ValueArg<double> af("af","Coeficiente_af", "Coeficiente Af",false,1.0,"double",cmd);
+//TCLAP::ValueArg<int> nF("nF","Contador_nF", "Numero de iteraciones",false,200,"int",cmd);
+//TCLAP::ValueArg<int> st("st","Contador_st", "Numero de iteraciones internas",false,200,"int",cmd);
 
 int main(int argc, char* argv[])
 {
@@ -27,35 +28,62 @@ int main(int argc, char* argv[])
 int Nx = 60;
 int Ny = 40;
 int Nz = 40;
-int R = 11;
-double ep = eps.getvalue();
-double ep1 = pow(ep,2);
-int fi[Nx][Ny][Nz];
-int r[Nx][Ny][Nz];
+double R = 11.0;
+//double Afi = afi.getValue();
+//double Av = av.getValue();
+//double Duu = duu.getValue();
+//double As = as.getValue();
+//double Ab = ab.getValue();
+//double Af = af.getValue();
+//int NF = nF.getValue();
+//int step = st.getValue();
+//double ep = eps.getValue();
+//double ep1 = pow(ep,2);
+//double dt = 1.0e-4; 
+double fi[Nx][Ny][Nz];
+double r[Nx][Ny][Nz];
+double aa[Nz];
+double bb,aux;
+int R1,i,j,k;
 
-	for(int i = 0; i < Nx; i++)
+	for(i = 0; i < Nx; i++)
 	{
-		for(int j = 0; j < Ny; j++)
+		for(j = 0; j < Ny; j++)
 		{
-			for(int k = 0; k < Nz; k++)
+			for(k = 0; k < Nz; k++)
 			{
-				fi[i][j][k]= 1;
-				r[i][j][k] = sqrt(pow(i-Nx/2,2) + pow(j-Ny/2,2) + pow(k,2));
+				fi[i][j][k]= 1.0;
+				r[i][j][k] = sqrt(pow((double)(i)-((double)(Nx)/(double)(2)),2) + pow((double)(j)-((double)(Ny)/(double)(2)),2) + pow((double)(k),2));
 				if(r[i][j][k] >= R)
 				{
-					fi[i][j][k] = -1;
+					fi[i][j][k] = -1.0;
 				} 
 			}
 		}
 	}
 
-int bb = min_element(abs(fi[Nx/2][Ny/2][0],fi[Nx/2][Ny/2][Nz-1]));
-int R1 = find(fi[Nx/2][Ny/2][0],fi[Nx/2][Ny/2][Nz-1],bb);
+	for(k = 0; k < Nz; k++)
+	{
+		aa[k] = fabs(fi[Nx/2][Ny/2][k]); 
+	}
 
-			for(int k = 0; k < Nz; k++)
-			{
-				cout<< fi[Nx/2][Ny/2][k] << endl; 
-			}
+	bb = aa[0];
+	R1 = 0;
+
+	for(k = 0; k < Nz; k++)
+	{
+		aux = min(bb,aa[k]);
+		if(aux == aa[k])
+		{
+			R1 = k;
+		}
+		bb = aux;
+	}	
+
+	for(int k = 0; k < Nz; k++)
+	{
+		cout<< fi[Nx/2][Ny/2][k] << endl; 
+	}
 	
 	printf ("\n%d\n",R1);
 
