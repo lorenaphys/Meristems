@@ -10,6 +10,36 @@
 using namespace std;
 
 
+	void lap(double H[60][40][40])
+	{
+		int i, j, k, Nx = 60, Ny = 40, Nz = 40;
+		double laplacian[Nx][Ny][Nz];
+
+		for(i = 0; i < Nx; i ++)
+		{
+			for(j = 0; j < Ny; j ++)
+			{
+				for(k = 0; k < Nz; k++)
+				{
+					laplacian[i][j][k] = 0.0;
+				} 
+			}
+		}	
+	
+		for(i = 1; i < Nx-2; i ++)
+		{
+			for(j = 1; j < Ny-2; j ++)
+			{
+				for(k = 1; k < Nz-2; k++)
+				{
+					laplacian[i][j][k] = H[i-1][j][k]+ H[i+1][j][k] + H[i][j-1][k] \
+					+ H[i][j+1][k] + H[i][j][k-1] + H[i][j][k+1] - 6.0*H[i][j][k];
+				} 
+			}
+		}
+	}
+
+
 //TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
 //TCLAP::ValueArg<double> eps("eps","Parametro_eps", "Parametro de orden",false,0.1,"double",cmd);
 //TCLAP::ValueArg<int> n("n","Contador_n", "Rompimiento de simetria",false,2,"int",cmd);
@@ -53,7 +83,8 @@ int R1,i,j,k;
 			for(k = 0; k < Nz; k++)
 			{
 				fi[i][j][k]= 1.0;
-				r[i][j][k] = sqrt(pow((double)(i)-((double)(Nx)/(double)(2)),2) + pow((double)(j)-((double)(Ny)/(double)(2)),2) + pow((double)(k),2));
+				r[i][j][k] = sqrt(pow((double)(i)-((double)(Nx)/(double)(2)),2) + \
+				pow((double)(j)-((double)(Ny)/(double)(2)),2) + pow((double)(k),2));
 				if(r[i][j][k] >= R)
 				{
 					fi[i][j][k] = -1.0;
@@ -80,11 +111,19 @@ int R1,i,j,k;
 		bb = aux;
 	}	
 
-	for(int k = 0; k < Nz; k++)
-	{
-		cout<< fi[Nx/2][Ny/2][k] << endl; 
-	}
+	lap(fi);
+
+	//for(i = 0; i < Nx; i++)
+	//{
+		//for(j = 0; j < Ny; j++)
+		//{
+			//for(k = 0; k < Nz; k++)
+			//{
+				//cout<< lapfi[i][j][k] << endl; 
+			//}
+		//}
+	//}
 	
-	printf ("\n%d\n",R1);
+	//printf ("\n%d\n",R1);
 
 }
