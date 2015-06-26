@@ -1,5 +1,5 @@
 #include <iostream>
-#include <tclap/CmdLine.h>
+//#include <tclap/CmdLine.h>
 #include <stdio.h>  // libreria basica para entrada y salida  
 #include <stdlib.h> // libreria para el uso de rand()  
 #include <time.h>   // libreria para el uso de time() 
@@ -9,35 +9,46 @@
 
 using namespace std;
 
+typedef double array_type[60][40][40];
 
-	void lap(double H[60][40][40])
+	void copia(array_type &ent, array_type &sal)
 	{
-		int i, j, k, Nx = 60, Ny = 40, Nz = 40;
-		double laplacian[Nx][Ny][Nz];
-
-		for(i = 0; i < Nx; i ++)
+		int i,j,k, Nx = 60, Ny = 40, Nz = 40;
+		for(i = 0; i < Nx; i++)
 		{
-			for(j = 0; j < Ny; j ++)
+			for(j = 0; j < Ny; j++)
 			{
 				for(k = 0; k < Nz; k++)
 				{
-					laplacian[i][j][k] = 0.0;
-				} 
+					ent[i][j][k] = sal[i][j][k];
+				}
 			}
-		}	
+		}
+	}
+
+	void  lap(array_type &H2, array_type &H)
+	{
+
+		array_type laplacian = {0.0};
+		
 	
+		int i, j, k, Nx = 60, Ny = 40, Nz = 40;
+
 		for(i = 1; i < Nx-2; i ++)
 		{
 			for(j = 1; j < Ny-2; j ++)
 			{
 				for(k = 1; k < Nz-2; k++)
 				{
-					laplacian[i][j][k] = H[i-1][j][k]+ H[i+1][j][k] + H[i][j-1][k] \
-					+ H[i][j+1][k] + H[i][j][k-1] + H[i][j][k+1] - 6.0*H[i][j][k];
+					laplacian[i][j][k] = H[i-1][j][k] + H[i+1][j][k] + H[i][j-1][k] + H[i][j+1][k] + H[i][j][k-1] + H[i][j][k+1] - 6.0 * H[i][j][k];
 				} 
 			}
+
 		}
+		
+		copia(H2,laplacian);
 	}
+
 
 
 //TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
@@ -59,7 +70,7 @@ int Nx = 60;
 int Ny = 40;
 int Nz = 40;
 double R = 11.0;
-//double Afi = afi.getValue();
+//double A*fi = a*fi.getValue();
 //double Av = av.getValue();
 //double Duu = duu.getValue();
 //double As = as.getValue();
@@ -70,8 +81,7 @@ double R = 11.0;
 //double ep = eps.getValue();
 //double ep1 = pow(ep,2);
 //double dt = 1.0e-4; 
-double fi[Nx][Ny][Nz];
-double r[Nx][Ny][Nz];
+array_type fi, r;
 double aa[Nz];
 double bb,aux;
 int R1,i,j,k;
@@ -93,6 +103,10 @@ int R1,i,j,k;
 		}
 	}
 
+array_type lapfi = {0.0};
+
+lap(lapfi,fi);	
+
 	for(k = 0; k < Nz; k++)
 	{
 		aa[k] = fabs(fi[Nx/2][Ny/2][k]); 
@@ -103,26 +117,31 @@ int R1,i,j,k;
 
 	for(k = 0; k < Nz; k++)
 	{
-		aux = min(bb,aa[k]);
-		if(aux == aa[k])
+		if(bb <= aa[k])
 		{
 			R1 = k;
 		}
-		bb = aux;
-	}	
+		else
+		{
+			bb = aa[k];
+		}
 
-	lap(fi);
+	}
+	
+	
 
-	//for(i = 0; i < Nx; i++)
-	//{
-		//for(j = 0; j < Ny; j++)
-		//{
-			//for(k = 0; k < Nz; k++)
-			//{
-				//cout<< lapfi[i][j][k] << endl; 
-			//}
-		//}
-	//}
+	for(i = 0; i < Nx; i++)
+	{
+		for(j = 0; j < Ny; j++)
+		{
+			for(k = 0; k < Nz; k++)
+			{
+				cout<< fi[i][j][k] << endl; 
+			}
+			printf("y = \n%d\n",j);
+		}
+		printf("x = \n%d\n",i);
+	}
 	
 	//printf ("\n%d\n",R1);
 
