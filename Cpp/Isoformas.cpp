@@ -1,5 +1,5 @@
 #include <iostream>
-//#include <tclap/CmdLine.h>
+#include <tclap/CmdLine.h>
 #include <stdio.h>  // libreria basica para entrada y salida  
 #include <stdlib.h> // libreria para el uso de rand()  
 #include <time.h>   // libreria para el uso de time() 
@@ -48,20 +48,20 @@ typedef double array_type[60][40][40];
 		
 		copia(H2,laplacian);
 	}
+	
 
 
-
-//TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
-//TCLAP::ValueArg<double> eps("eps","Parametro_eps", "Parametro de orden",false,0.1,"double",cmd);
+TCLAP::CmdLine cmd("Command description message", ' ', "0.1");
+TCLAP::ValueArg<double> eps("e","Parametro_eps", "Parametro de orden",false,0.1,"double",cmd);
 //TCLAP::ValueArg<int> n("n","Contador_n", "Rompimiento de simetria",false,2,"int",cmd);
-//TCLAP::ValueArg<double> afi("afi","Coeficiente_afi", "Coeficiente Afi",false,1.0,"double",cmd);
+TCLAP::ValueArg<double> afi("","Coeficiente_afi", "Coeficiente Afi",false,1.0,"double",cmd);
 //TCLAP::ValueArg<double> av("av","Coeficiente_av", "Coeficiente Av",false,1.0,"double",cmd);
 //TCLAP::ValueArg<double> duu("duu","Coeficiente_duu", "Coeficiente Duu",false,1.0,"double",cmd);
 //TCLAP::ValueArg<double> as("as","Coeficiente_as", "Coeficiente As",false,1.0,"double",cmd);
-//TCLAP::ValueArg<double> ab("ab","Coeficiente_ab", "Coeficiente Ab",false,1.0,"double",cmd);
-//TCLAP::ValueArg<double> af("af","Coeficiente_af", "Coeficiente Af",false,1.0,"double",cmd);
-//TCLAP::ValueArg<int> nF("nF","Contador_nF", "Numero de iteraciones",false,200,"int",cmd);
-//TCLAP::ValueArg<int> st("st","Contador_st", "Numero de iteraciones internas",false,200,"int",cmd);
+TCLAP::ValueArg<double> ab("","Coeficiente_ab", "Coeficiente Ab",false,1.0,"double",cmd);
+TCLAP::ValueArg<double> af("","Coeficiente_af", "Coeficiente Af",false,1.0,"double",cmd);
+TCLAP::ValueArg<int> nF("","Contador_nF", "Numero de iteraciones",false,200,"int",cmd);
+TCLAP::ValueArg<int> st("","Contador_st", "Numero de iteraciones internas",false,200,"int",cmd);
 
 int main(int argc, char* argv[])
 {
@@ -70,20 +70,23 @@ int Nx = 60;
 int Ny = 40;
 int Nz = 40;
 double R = 11.0;
-//double A*fi = a*fi.getValue();
+double dt = 1e-4;
+double Afi = afi.getValue();
 //double Av = av.getValue();
 //double Duu = duu.getValue();
 //double As = as.getValue();
-//double Ab = ab.getValue();
-//double Af = af.getValue();
-//int NF = nF.getValue();
-//int step = st.getValue();
-//double ep = eps.getValue();
-//double ep1 = pow(ep,2);
+double Ab = ab.getValue();
+double Af = af.getValue();
+int NF = nF.getValue();
+int step = st.getValue();
+double ep = eps.getValue();
+double ep1 = pow(ep,2);
 //double dt = 1.0e-4; 
 array_type fi, r;
 double aa[Nz];
 double bb,aux;
+double beta = 1.0, sigma = -5.5, sifiu = 1e-4;
+double u1 = 0.0, u2 = 0.0, u3 = 0.0;
 int R1,i,j,k;
 
 	for(i = 0; i < Nx; i++)
@@ -93,19 +96,15 @@ int R1,i,j,k;
 			for(k = 0; k < Nz; k++)
 			{
 				fi[i][j][k]= 1.0;
-				r[i][j][k] = sqrt(pow((double)(i)-((double)(Nx)/(double)(2)),2) + \
-				pow((double)(j)-((double)(Ny)/(double)(2)),2) + pow((double)(k),2));
+				r[i][j][k] = sqrt(pow((double)(i)-((double)(Nx)/2),2) + \
+				pow((double)(j)-((double)(Ny)/2),2) + pow((double)(k),2));
 				if(r[i][j][k] >= R)
 				{
 					fi[i][j][k] = -1.0;
 				} 
 			}
 		}
-	}
-
-array_type lapfi = {0.0};
-
-lap(lapfi,fi);	
+	}	
 
 	for(k = 0; k < Nz; k++)
 	{
@@ -128,21 +127,128 @@ lap(lapfi,fi);
 
 	}
 	
-	
-
+	array_type u;
 	for(i = 0; i < Nx; i++)
 	{
 		for(j = 0; j < Ny; j++)
 		{
 			for(k = 0; k < Nz; k++)
 			{
-				cout<< fi[i][j][k] << endl; 
+				u[i][j][k] = exp(-(pow(double(i)-double(Nx)/2,2.0) + pow(double(j)-double(Ny)/2,2.0) + pow(double(k)- double(R1)+8.0,2.0))/100);
 			}
-			printf("y = \n%d\n",j);
 		}
-		printf("x = \n%d\n",i);
 	}
-	
-	//printf ("\n%d\n",R1);
+
+array_type lapfi, lapu, mu, F,lapmu, Fs, Ft, F2, E, lapE, fi1;
+int i1,j1;
+
+	for(i1 = 0; i < NF; i++)
+	{
+		for(j1 = 0; j < step; j++)
+		{
+			//laplaciano de fi
+			lap(lapfi,fi);
+			
+			//laplaciano de u
+			lap(lapu,u);
+			
+			//definicion de mu
+			for(i = 0; i < Nx; i++)
+			{
+				for(j = 0; j < Ny; j++)
+				{
+					for(k = 0; k < Nz; k++)
+					{
+						mu[i][j][k] = (pow(fi[i][j][k],2)-1)*(fi[i][j][k] - ep*beta*pow(u[i][j][k],2)) - ep1*lapfi[i][j][k];
+					}
+				}
+			}
+			
+			//laplaciano de mu
+			lap(lapmu,mu);
+			
+			//definicion de F
+			for(i = 0; i < Nx; i++)
+			{
+				for(j = 0; j < Ny; j++)
+				{
+					for(k = 0; k < Nz; k++)
+					{
+						F[i][j][k] = 2*Afi*mu[i][j][k]*(3*pow(fi[i][j][k],2)-2*ep*beta*pow(u[i][j][k],2)-1)-2*Afi*ep1*lapmu[i][j][k];
+					}
+				}
+			}
+			
+			//definiendo Fs
+			for(i = 0; i < Nx; i++)
+			{
+				for(j = 0; j < Ny; j++)
+				{
+					for(k = 0; k < Nz; k++)
+					{
+						Fs[i][j][k] = sigma*lapfi[i][j][k];
+					}
+				}
+			}
+			
+			//definiendo Ft
+			for(i = 0; i < Nx; i++)
+			{
+				for(j = 0; j < Ny; j++)
+				{
+					for(k = 0; k < Nz; k++)
+					{
+						Ft[i][j][k] = -sifiu*lapu[i][j][k];
+					}
+				}
+			}
+			
+			//definiendo F2
+			for(i = 0; i < Nx; i++)
+			{
+				for(j = 0; j < Ny; j++)
+				{
+					for(k = 0; k < Nz; k++)
+					{
+						F2[i][j][k] = 4*Ab*fi[i][j][k]*(pow(fi[i][j][k],2)-1)*pow(u[i][j][k]-u1,2)*pow(u[i][j][k]-u2,2)+2*Af*fi[i][j][k]*pow(u[i][j][k]-u3,2);
+					}
+				}
+			}
+			
+			//definiendo la energia
+			//for(i = 0; i < Nx; i++)
+			//{
+				//for(j = 0; j < Ny; j++)
+				//{
+					//for(k = 0; k < Nz; k++)
+					//{
+						//E[i][j][k] = F[i][j][k] - Fs[i][j][k] + Ft[i][j][k] + F2[i][j][k];
+					//}
+				//}
+			//}
+			
+			//laplaciano de E
+			//lap(lapE,E);
+			
+			//integracion de fi con el metodo de Euler
+			//copia(fi1,fi);
+			//for(i = 0; i < Nx; i++)
+			//{
+				//for(j = 0; j < Ny; j++)
+				//{
+					//for(k = 0; k < Nz; k++)
+					//{
+						//fi[i][j][k] = fi[i][j][k] + dt*lapE[i][j][k];
+					//}
+				//}
+			//}
+
+		}
+	}
+
+	for(k = 0; k < Nz; k++)
+	{
+		cout << fi[Nx/2][Ny/2][k] << endl;
+	}
 
 }
