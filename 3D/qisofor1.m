@@ -180,12 +180,12 @@ for iter=cont:NF
         %sig(iter)=sigma;
         
         %If=20*(F)*sum(sum(sum((fi>=-.99))))/Nx/Ny/Nz;
-        If=20*sum(sum(sum(F.*fi)))/Nx/Ny/Nz;
+        I=20*sum(sum(sum(F.*fi)))/Nx/Ny/Nz;
         %If(fi<=0)=0; 
         
         Ft=-fi.*gradient(mu);
          
-        fi=fi+dt*Dfi*(lapF+lapFs)+dt*If*(fi>=-.9);
+        fi=fi+dt*Dfi*(lapF+lapFs)+dt*I*(fi>=-.9);
         u=u+dt*Du*(lapG);
         %u=u+dt*gradient(str.*gradient(G));
 %         fi(1,:,:)=fi(2,:,:);
