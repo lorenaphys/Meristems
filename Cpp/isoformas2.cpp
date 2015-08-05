@@ -10,10 +10,21 @@
 using namespace std;
 using namespace itpp;
 
-void lap(H, H2)
-{
-	int Nx = 60, Ny = 40, Nz = 40;
-}
+//void lap(vec H(60*40*40), vec H2(60*40*40))
+//{
+	//int i, j, k, Nx = 60, Ny = 40, Nz = 40, n = Nx*Ny*Nz;
+	//vec laplacian(n);
+	//for(i = 1; i < Nx-2; i++)
+	//{
+		//for(j = 1; j < Ny-2; j++)
+		//{
+			//for(k = 1; k < Nz-2; k++)
+			//{
+				
+			//}
+		//}
+	//}
+//}
 
 int main(int argc, char* argv[])
 {
@@ -28,8 +39,8 @@ int main(int argc, char* argv[])
 		{
 			for(k = 0; k < Nz; k++)
 			{
-				a = (i-1)*j*k + (j-1)*k + k -1;
-				r(a) = sqrt(pow(double(i-Nx/2),2) + pow(double(j-Ny/2),2) + pow(double(k),2));
+				a = (i-1)*Ny*Nz + (j-1)*Nz + k -1;
+				r(a) = sqrt(pow((double)i-Nx/2,2) + pow((double)j-Ny/2,2) + pow((double)k,2));
 				if(r(a) >= 11.0)
 				{
 					fi(a) = -1;
